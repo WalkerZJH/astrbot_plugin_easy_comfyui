@@ -1,0 +1,68 @@
+{
+    "comfyui_url": {
+        "type": "string",
+        "description": "ComfyUI 服务地址",
+        "default": "http://localhost:8188",
+        "hint": "ComfyUI API 服务地址，需包含 http:// 或 https:// 前缀"
+    },
+    "verbose": {
+        "type": "bool",
+        "description": "详细输出模式",
+        "default": true,
+        "hint": "开启后将显示生图进度提示，关闭则仅输出最终图片"
+    },
+    "session_timeout_time": {
+        "type": "int",
+        "description": "超时时间（秒）",
+        "default": 120,
+        "hint": "单次生图请求的最大等待时间"
+    },
+    "max_concurrent_tasks": {
+        "type": "int",
+        "description": "最大并发数",
+        "default": 3,
+        "hint": "同时处理的最大任务数，超出的任务将排队等待"
+    },
+    "enable_generate_prompt": {
+        "type": "bool",
+        "description": "LLM 优化提示词",
+        "default": true,
+        "hint": "开启后将使用 LLM 将中文描述翻译为专业英文提示词"
+    },
+    "enable_show_positive_prompt": {
+        "type": "bool",
+        "description": "显示最终提示词",
+        "default": false,
+        "hint": "开启后将在生图前显示最终使用的提示词"
+    },
+    "positive_prompt_global": {
+        "type": "string",
+        "description": "全局正向提示词",
+        "default": "masterpiece, best quality, ",
+        "hint": "自动附加到所有生图请求的提示词中"
+    },
+    "enable_positive_prompt_add_in_head_or_tail": {
+        "type": "bool",
+        "description": "全局提示词位置",
+        "default": true,
+        "hint": "true=添加在开头（高权重），false=添加在结尾"
+    },
+    "negative_prompt_global": {
+        "type": "string",
+        "description": "全局负向提示词",
+        "default": "nsfw, paintings, sketches, ",
+        "hint": "自动附加到所有生图请求的负向提示词中"
+    },
+    "prompt_guidelines": {
+        "type": "string",
+        "description": "LLM 提示词生成指南",
+        "default": "请优先使用动漫风格相关的描述词",
+        "hint": "LLM 生成提示词时的附加指导"
+    },
+    "default_workflow_index": {
+        "type": "int",
+        "description": "默认工作流索引",
+        "default": 1,
+        "hint": "对应 workflows 文件夹中工作流的序号（从 1 开始）"
+    }
+}

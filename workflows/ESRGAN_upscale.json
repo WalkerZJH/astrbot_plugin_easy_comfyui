@@ -1,0 +1,288 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 385448082618830,
+      "steps": 20,
+      "cfg": 6,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1,
+      "model": [
+        "27",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "5": {
+    "inputs": {
+      "width": 384,
+      "height": 384,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "空Latent图像"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "masterpiece, best quality, highres,An aristocratic girl, portrait, intricate dress, elaborate jewelry, elegant, noble, detailed, beautiful, graceful, refined, delicate, soft lighting, pastel colors, anime style, manga art, trending on ArtStation, high quality, sharp focus, studio lighting, masterpiece",
+      "clip": [
+        "27",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": "bad hands, text, watermark\n",
+      "clip": [
+        "27",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "11": {
+    "inputs": {
+      "seed": 707905495448612,
+      "steps": 12,
+      "cfg": 6,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 0.5,
+      "model": [
+        "27",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "13": {
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "20": {
+    "inputs": {
+      "pixels": [
+        "24",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "21": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "22": {
+    "inputs": {
+      "upscale_model": [
+        "33",
+        0
+      ],
+      "image": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "使用模型放大图像"
+    }
+  },
+  "24": {
+    "inputs": {
+      "upscale_method": "bilinear",
+      "width": 1024,
+      "height": 1024,
+      "crop": "disabled",
+      "image": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "缩放图像"
+    }
+  },
+  "25": {
+    "inputs": {
+      "ckpt_name": "mixProV4_v4.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Checkpoint加载器（简易）"
+    }
+  },
+  "26": {
+    "inputs": {
+      "images": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "27": {
+    "inputs": {
+      "lora_name": "add_detail_sd15.safetensors",
+      "strength_model": 0.7,
+      "strength_clip": 1,
+      "model": [
+        "28",
+        0
+      ],
+      "clip": [
+        "28",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  },
+  "28": {
+    "inputs": {
+      "lora_name": "animeoutlineV4_16.safetensors",
+      "strength_model": 0.2,
+      "strength_clip": 0.3,
+      "model": [
+        "29",
+        0
+      ],
+      "clip": [
+        "29",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  },
+  "29": {
+    "inputs": {
+      "lora_name": "animeTarotCardArtStyleLora_v31_sd15.safetensors",
+      "strength_model": 0.7,
+      "strength_clip": 1,
+      "model": [
+        "25",
+        0
+      ],
+      "clip": [
+        "31",
+        0
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  },
+  "31": {
+    "inputs": {
+      "stop_at_clip_layer": -2,
+      "clip": [
+        "25",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "设置CLIP最后一层"
+    }
+  },
+  "32": {
+    "inputs": {
+      "vae_name": "animevae.pt"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "33": {
+    "inputs": {
+      "model_name": "RealESRGAN_x4plus_anime_6B.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "加载放大模型"
+    }
+  }
+}

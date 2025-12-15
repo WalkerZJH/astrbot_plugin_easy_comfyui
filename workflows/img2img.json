@@ -1,0 +1,264 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 800590197057740,
+      "steps": 20,
+      "cfg": 7,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 0.6,
+      "model": [
+        "106",
+        0
+      ],
+      "positive": [
+        "92",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "99",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "mixProV4_v4.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Checkpoint加载器（简易）"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "masterpiece, best quality, highres,a cute anime girl, red hair, long hair, character design, elegant, detailed, high quality, vibrant, soft lighting, volumetric lighting, pastel colors, soft colors, studio ghibli style, makoto shinkai, kyoani, muted colors, intricate, beautiful, aesthetic, masterpiece, best quality, ultra detailed, cinematic lighting, sharp focus, vibrant, smooth, illustration, art by artgerm and greg rutkowski and alphonse mucha",
+      "clip": [
+        "106",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": "bad hands, text, watermark,",
+      "clip": [
+        "106",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "12": {
+    "inputs": {
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "31": {
+    "inputs": {
+      "lora_name": "animeoutlineV4_16.safetensors",
+      "strength_model": 0.3,
+      "strength_clip": 0.8,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  },
+  "90": {
+    "inputs": {
+      "preprocessor": "CannyEdgePreprocessor",
+      "resolution": 1024,
+      "image": [
+        "100",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "91": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_canny_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "加载ControlNet模型"
+    }
+  },
+  "92": {
+    "inputs": {
+      "strength": 1,
+      "conditioning": [
+        "6",
+        0
+      ],
+      "control_net": [
+        "91",
+        0
+      ],
+      "image": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "ControlNetApply",
+    "_meta": {
+      "title": "应用ControlNet（旧版）"
+    }
+  },
+  "93": {
+    "inputs": {
+      "image": "录像 绝望.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "97": {
+    "inputs": {
+      "vae_name": "animevae.pt"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "99": {
+    "inputs": {
+      "pixels": [
+        "100",
+        0
+      ],
+      "vae": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "100": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": [
+        "101",
+        0
+      ],
+      "height": [
+        "101",
+        1
+      ],
+      "crop": "disabled",
+      "image": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "缩放图像"
+    }
+  },
+  "101": {
+    "inputs": {
+      "image": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "获取图像尺寸"
+    }
+  },
+  "106": {
+    "inputs": {
+      "lora_name": "ghibli_style_offset-sd15.safetensors",
+      "strength_model": 0.8,
+      "strength_clip": 0.8,
+      "model": [
+        "107",
+        0
+      ],
+      "clip": [
+        "107",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  },
+  "107": {
+    "inputs": {
+      "lora_name": "add_detail_sd15.safetensors",
+      "strength_model": -0.1,
+      "strength_clip": 0.8,
+      "model": [
+        "31",
+        0
+      ],
+      "clip": [
+        "31",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  }
+}
