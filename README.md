@@ -1,12 +1,12 @@
-# AstrBot Plugin: Local Diffusion
+# AstrBot Plugin: Easy Comfyui
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![Platform](https://img.shields.io/badge/platform-AstrBot-green)
 ![Backend](https://img.shields.io/badge/backend-ComfyUI-orange)
 
-**🎨 基于 ComfyUI 的本地 Stable Diffusion 图像生成插件**
+**🎨 基于 ComfyUI 的 Stable Diffusion 图像生成插件**
 
 *上手即用 · 自动解析工作流 · 指令简洁 · 无需复杂参数*
 
@@ -31,7 +31,7 @@
 ## 📁 项目结构
 
 ```
-astrbot_plugin_local_diffusion/
+astrbot_plugin_easy_comfyui/
 ├── main.py              # 插件主入口，命令注册与处理
 ├── comfyui_client.py    # ComfyUI API 客户端
 ├── workflow_parser.py   # 工作流解析器，自动识别节点
@@ -197,7 +197,7 @@ astrbot_plugin_local_diffusion/
 
 工作流文件存储在：
 ```
-<AstrBot>/data/plugins/astrbot_plugin_local_diffusion/workflows/
+<AstrBot>/data/plugins/astrbot_plugin_easy_comfyui/workflows/
 ```
 
 更新插件前请手动备份此文件夹。
