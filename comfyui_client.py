@@ -33,7 +33,7 @@ class ComfyUIClient:
         """检查服务状态"""
         try:
             await self.ensure_session()
-            timeout = aiohttp.ClientTimeout(total=5)
+            timeout = aiohttp.ClientTimeout(total=min(self.timeout, 10))  # 健康检查最多10秒
             async with self.session.get(f"{self.base_url}/system_stats", timeout=timeout) as resp:
                 if resp.status == 200:
                     return True, "服务正常"
@@ -52,7 +52,7 @@ class ComfyUIClient:
             fixed_workflow, current_seed = self._enforce_deterministic_workflow(workflow)
             payload = {"prompt": fixed_workflow, "client_id": self.client_id}
 
-            timeout = aiohttp.ClientTimeout(total=30)
+            timeout = aiohttp.ClientTimeout(total=self.timeout)
             async with self.session.post(
                 f"{self.base_url}/prompt", json=payload, timeout=timeout
             ) as resp:
@@ -70,7 +70,7 @@ class ComfyUIClient:
         """获取执行历史"""
         try:
             await self.ensure_session()
-            timeout = aiohttp.ClientTimeout(total=10)
+            timeout = aiohttp.ClientTimeout(total=min(self.timeout, 30))  # 历史查询最多30秒
             async with self.session.get(
                 f"{self.base_url}/history/{prompt_id}", timeout=timeout
             ) as resp:
@@ -88,7 +88,7 @@ class ComfyUIClient:
         try:
             await self.ensure_session()
             params = {"filename": filename, "subfolder": subfolder, "type": folder_type}
-            timeout = aiohttp.ClientTimeout(total=30)
+            timeout = aiohttp.ClientTimeout(total=self.timeout)
             async with self.session.get(
                 f"{self.base_url}/view", params=params, timeout=timeout
             ) as resp:
@@ -110,7 +110,7 @@ class ComfyUIClient:
             data.add_field("image", image_data, filename=filename, content_type="image/png")
             data.add_field("overwrite", str(overwrite).lower())
 
-            timeout = aiohttp.ClientTimeout(total=30)
+            timeout = aiohttp.ClientTimeout(total=self.timeout)
             async with self.session.post(
                 f"{self.base_url}/upload/image", data=data, timeout=timeout
             ) as resp:

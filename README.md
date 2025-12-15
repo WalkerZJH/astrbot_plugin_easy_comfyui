@@ -40,7 +40,7 @@ astrbot_plugin_easy_comfyui/
 ├── metadata.yaml        # 插件元信息
 ├── requirements.txt     # 依赖项
 ├── README.md            # 本文档
-└── workflows/           # 工作流文件夹 ⚠️ 重要！
+└── workflows/           # 内置工作流（启动时自动同步到数据目录）
     ├── example1.json    # 工作流文件（ComfyUI 导出）
     └── ...
 ```
@@ -69,26 +69,23 @@ astrbot_plugin_easy_comfyui/
 
 #### 2. 添加工作流文件
 
-将 ComfyUI 导出的工作流 JSON 文件放入 `workflows/` 文件夹：
+将 ComfyUI 导出的工作流 JSON 文件放入数据目录的 `workflows/` 文件夹：
 
 ```bash
 # 工作流文件位置
-<插件目录>/workflows/your_workflow.json
+<AstrBot数据目录>/data/astrbot_plugin_easy_comfyui/workflows/your_workflow.json
 ```
 
 > **📌 如何导出工作流？**
 > 
 > 在 ComfyUI Web 界面中：设置 → 导出 → 选择 **API Format (.json)**
 
-⚠️ **重要警告**
+> **💡 提示**
+> 
+> 插件内置的工作流会在每次启动时自动同步到数据目录。
+> 您添加的自定义工作流存储在数据目录中，插件更新不会丢失。
 
-```
-工作流文件存储在插件目录内的 workflows/ 文件夹中。
-插件更新或重装时，此文件夹可能被覆盖！
-请务必在更新插件前备份您的工作流文件！
-```
-
-#### 4. 重启 AstrBot
+#### 3. 重启 AstrBot
 
 重启后发送 `/sdl check` 验证连接状态。
 
@@ -193,14 +190,14 @@ astrbot_plugin_easy_comfyui/
 
 当前工作流需要包含 `LoadImage` 节点才能支持图生图。请切换到支持图生图的工作流，或在 ComfyUI 中添加 LoadImage 节点。
 
-### Q: 如何备份工作流？
+### Q: 工作流文件存储在哪里？
 
-工作流文件存储在：
+工作流文件存储在 AstrBot 数据目录中：
 ```
-<AstrBot>/data/plugins/astrbot_plugin_easy_comfyui/workflows/
+<AstrBot数据目录>/plugin_data/astrbot_plugin_easy_comfyui/workflows/
 ```
 
-更新插件前请手动备份此文件夹。
+您存储在插件workflows的工作流如果没有被更新获取，则存在丢失的可能。
 
 ---
 

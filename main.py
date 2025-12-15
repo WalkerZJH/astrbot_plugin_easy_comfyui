@@ -4,12 +4,13 @@ import asyncio
 import base64
 import os
 import re
+import shutil
 import time
 import uuid as uuid_mod
 
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, filter
-from astrbot.api.star import Context, Star, register
+from astrbot.api.star import Context, Star, StarTools, register
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.message.components import Image
 
@@ -23,8 +24,9 @@ except ImportError:
     from workflow_parser import WorkflowParser
 
 PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
-WORKFLOWS_DIR = os.path.join(PLUGIN_DIR, "workflows")
-TEMP_PATH = os.path.abspath("data/temp")
+BUNDLED_WORKFLOWS_DIR = os.path.join(PLUGIN_DIR, "workflows")  # 插件内置工作流目录
+WORKFLOWS_DIR = None  # 用户工作流目录，将在插件初始化时设置
+TEMP_PATH = None  # 将在插件初始化时设置
 
 
 @register(
@@ -39,8 +41,15 @@ class SDGeneratorComfyUI(Star):
         self.config = config
         self._validate_config()
 
+        global TEMP_PATH, WORKFLOWS_DIR
+        data_dir = StarTools.get_data_dir(self.context, "astrbot_plugin_easy_comfyui")
+        TEMP_PATH = str(data_dir / "temp")
+        WORKFLOWS_DIR = str(data_dir / "workflows")
         os.makedirs(TEMP_PATH, exist_ok=True)
         os.makedirs(WORKFLOWS_DIR, exist_ok=True)
+        
+        # 同步内置工作流到用户目录（名称相同则更新，不存在则添加，不删除用户目录中的文件）
+        self._sync_bundled_workflows()
 
         self.comfyui = ComfyUIClient(
             base_url=self.config.get("comfyui_url", "http://localhost:8188"),
@@ -51,6 +60,25 @@ class SDGeneratorComfyUI(Star):
         self.active_tasks = 0
         self.max_concurrent_tasks = config.get("max_concurrent_tasks", 3)
         self.task_semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
+
+    def _sync_bundled_workflows(self):
+        """同步内置工作流到用户目录
+        
+        名称相同则更新，不存在则添加，不删除用户目录中已有的文件
+        """
+        if not os.path.exists(BUNDLED_WORKFLOWS_DIR):
+            return
+        
+        for filename in os.listdir(BUNDLED_WORKFLOWS_DIR):
+            if not filename.endswith(".json"):
+                continue
+            src_path = os.path.join(BUNDLED_WORKFLOWS_DIR, filename)
+            dst_path = os.path.join(WORKFLOWS_DIR, filename)
+            try:
+                shutil.copy2(src_path, dst_path)
+                logger.debug(f"同步工作流: {filename}")
+            except Exception as e:
+                logger.warning(f"同步工作流 {filename} 失败: {e}")
 
     def _validate_config(self):
         """验证配置"""
@@ -498,13 +526,3 @@ class SDGeneratorComfyUI(Star):
     async def cleanup(self):
         """清理资源"""
         await self.comfyui.close()
-
-    def __del__(self):
-        try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                loop.create_task(self.comfyui.close())
-            else:
-                loop.run_until_complete(self.comfyui.close())
-        except Exception:
-            pass
