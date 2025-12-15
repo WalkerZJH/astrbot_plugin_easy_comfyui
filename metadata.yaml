@@ -1,7 +1,6 @@
 name: astrbot_plugin_easy_comfyui # 插件唯一识别名，以 astrbot_plugin_ 前缀开头
 display_name: Easy ComfyUI 生图插件 # 用于展示的名字，可以是方便人类阅读的名字（需要版本 >= v4.5.0，低版本不会报错，请放心填写）
-desc: 🚀 开箱即用	只需配置 ComfyUI 地址，放入工作流文件即可使用\n🔧 自动解析	智能识别工作流\n点，自动映射提示词、采样器等参数
-💬 指令简洁	无需记忆复杂参数
+desc: "🚀 开箱即用：只需配置 ComfyUI 地址，放入工作流文件即可使用 | 🔧 自动解析：智能识别工作流节点，自动映射提示词、采样器等参数 | 💬 指令简洁：无需记忆复杂参数"
 version: v1.1.0 # 插件版本号。格式：v1.1.1 或者 v1.1
 author: WalkerZJH # 作者
 repo: https://github.com/WalkerZJH/astrbot_plugin_easy_comfyui # 插件的仓库地址
